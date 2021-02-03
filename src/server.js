@@ -1,0 +1,34 @@
+const myData = require('./myData.js');
+const Polygon = require('./Polygon.js');
+const _ = require('underscore');
+const http = require('http');
+
+console.log("Hello World");
+
+const helloFunction = () => {
+    console.log('Hello Function');
+};
+
+helloFunction();
+
+myData.getMessage();
+
+const myPolygon = new Polygon(10, 15);
+console.dir(myPolygon.height);
+
+
+const port = process.env.PORT || process.env.NODE_PORT || 3000;
+
+const onRequest = (request, response) => {
+    if(request.url === '/favicon.ico') {
+        console.log('favicon request');
+    }
+
+    response.writeHead(200, {'Content-Type': 'text/plain'});
+    console.log('request received');
+
+    response.write(myData.getMessage());
+    response.end();
+}
+
+http.createServer(onRequest).listen(port);
